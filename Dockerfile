@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 RUN echo LANG=\"en_US.UTF-8\" > /etc/default/locale
-RUN echo "Europe/Berlin" > /etc/timezone
 
 ######### upgrade system and install java certs ##
 RUN apt-get update
