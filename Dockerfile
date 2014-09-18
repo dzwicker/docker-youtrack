@@ -22,7 +22,7 @@ RUN apt-get install -y oracle-java7-installer
  
 
 ######### Install youtrack ###################
-ENV YOUTRACK_VERSION 5.2.4-8815
+ENV YOUTRACK_VERSION 5.2.5-8823
 
 RUN mkdir -p /usr/local/youtrack
 RUN mkdir -p /var/lib/youtrack
