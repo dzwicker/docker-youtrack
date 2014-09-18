@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.11
+FROM phusion/baseimage:0.9.13
 MAINTAINER Daniel Zwicker <email@daniel-zwicker.de>
 
 ENV DEBIAN_FRONTEND noninteractive
