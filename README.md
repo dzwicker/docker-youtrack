@@ -1,6 +1,7 @@
 
 # docker-youtrack
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dzwicker/docker-youtrack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 *Easy youtrack deployment using docker*
 
 These Dockerfiles allow you to easily build images to deploy your own [youtrack](http://www.jetbrains.com/youtrack/) instance.
