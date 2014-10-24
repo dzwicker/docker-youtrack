@@ -1,6 +1,5 @@
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dzwicker/docker-youtrack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
 # docker-youtrack
 *Easy youtrack deployment using docker*
 
