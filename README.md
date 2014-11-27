@@ -94,3 +94,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 	}
 	```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dzwicker/docker-youtrack/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
