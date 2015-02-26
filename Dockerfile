@@ -26,7 +26,7 @@ ENV YOUTRACK_VERSION 6.0.12124
 
 RUN mkdir -p /usr/local/youtrack
 RUN mkdir -p /var/lib/youtrack
-RUN wget -nv http://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.jar -O /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar
+RUN wget -nv https://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.jar -O /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar
 RUN ln -s /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar /usr/local/youtrack/youtrack.jar
 
 ADD ./etc /etc
