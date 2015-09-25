@@ -1,38 +1,50 @@
-FROM phusion/baseimage:0.9.13
-MAINTAINER Daniel Zwicker <email@daniel-zwicker.de>
+FROM ubuntu:14.04
+MAINTAINER daniel.zwicker@in2experience.com
 
-ENV DEBIAN_FRONTEND noninteractive
+# Set environment variables.
+ENV HOME="/root" DEBIAN_FRONTEND=noninteractive
 
 ######### Set locale to UTF-8 ###################
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-RUN echo LANG=\"en_US.UTF-8\" > /etc/default/locale
+RUN \
+    locale-gen en_US.UTF-8 && \
+    echo LANG=\"en_US.UTF-8\" > /etc/default/locale && \
+    echo "Europe/Berlin" > /etc/timezone
+
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+RUN \
+    groupadd --gid 2000 youtrack && \
+    useradd --system --uid 2000 --gid youtrack youtrack
 
 ######### upgrade system and install java certs ##
-RUN apt-get update
-RUN apt-get -y dist-upgrade
-RUN apt-get -y install wget ca-certificates-java
+RUN \
+    sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -y upgrade && \
+    apt-get install -y wget software-properties-common && \
+    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+    add-apt-repository -y ppa:webupd8team/java && \
+    apt-get update && \
+    apt-get install -y oracle-java8-installer ca-certificates-java && \
+    apt-get -y autoremove && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install Java
-RUN add-apt-repository -y ppa:webupd8team/java
-RUN apt-get update
-RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-RUN apt-get install -y oracle-java7-installer
- 
+# Set environment variables.
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 
 ######### Install youtrack ###################
-ENV YOUTRACK_VERSION 6.0.12619
-
-RUN mkdir -p /usr/local/youtrack
-RUN mkdir -p /var/lib/youtrack
-RUN wget -nv https://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.jar -O /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar
-RUN ln -s /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar /usr/local/youtrack/youtrack.jar
-
 ADD ./etc /etc
+ADD youtrack.sh /usr/local/youtrack.sh
 
+RUN \
+    export YOUTRACK_VERSION=6.5.16713 && \
+    mkdir -p /usr/local/youtrack && \
+    mkdir -p /var/lib/youtrack && \
+    wget -nv https://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.jar -O /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar && \
+    ln -s /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar /usr/local/youtrack/youtrack.jar && \
+    chown -R youtrack:youtrack /usr/local/youtrack && \
+    chown -R youtrack:youtrack /var/lib/youtrack
+
+USER youtrack
 EXPOSE 8080
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-CMD ["/sbin/my_init"]
+CMD ["/usr/local/youtrack.sh"]
