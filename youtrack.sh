@@ -6,4 +6,4 @@ exec java \
 	-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djavax.net.ssl.trustStorePassword=changeit \
 	-Djetbrains.youtrack.disableBrowser=true -Djetbrains.youtrack.enableGuest=false \
 	-Djetbrains.mps.webr.log4jPath=/etc/youtrack/log4j.xml -Djava.awt.headless=true \
-	-jar /usr/local/youtrack/youtrack.jar 8080
+	-jar /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar 8080
