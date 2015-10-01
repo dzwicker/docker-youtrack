@@ -29,16 +29,17 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
   
   `mkdir -p /var/lib/youtrack`
 
-2. Create container!
+2. Permissions!
 
   The Dockerfile creates a youtrack user to run `youtrack` without root permissions. This user has a `UID` of `2000`. Please make sure to add a user to your host system with this `UID` and allow him to read and write to `/var/lib/youtrack`. The name of this host user in not important. (You can use a the user group, too. It has the `GID` of 2000 :)
   
 3. Create container!
 
-  `docker create -t -i -p 127.0.0.1:8080:8080 -v /var/lib/youtrack:/var/lib/youtrack --name docker-youtrack dzwicker/docker-youtrack`
+   Replace the value for the environment variable `YOUTRACK_BASE_URL`!
 
-4. Stop it!
-5. Create upstart configuration `/etc/init/docker-youtrack.conf`
+  `docker create -t -i -p 127.0.0.1:8080:8080 -v /var/lib/youtrack:/var/lib/youtrack -e YOUTRACK_BASE_URL='http(s):\\your.domain.com' --name docker-youtrack dzwicker/docker-youtrack`
+
+4. Create upstart configuration `/etc/init/docker-youtrack.conf`
 
 	``` bash
 	description "Docker Youtrack"
@@ -50,7 +51,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 	end script
 
 	```
-6. (optional) Setup logrotate e.g. `/etc/logrotate.d/docker-youtrack`
+5. (optional) Setup logrotate e.g. `/etc/logrotate.d/docker-youtrack`
 
 
 	```
@@ -64,7 +65,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 	    compress
 	}
 	```
-7. (optional) Add vhost to nginx
+6. (optional) Add vhost to nginx
 
 	`mkdir -p /var/log/nginx/your-domain`
 
