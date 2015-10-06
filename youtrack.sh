@@ -1,6 +1,6 @@
-#!/bin/bash -eu
+#!/bin/bash -e
 
-if "x${YOUTRACK_BASE_URL}" != "x"; then
+if [ "x${YOUTRACK_BASE_URL}" != "x" ]; then
 	exec java \
 		-XX:MaxMetaspaceSize=250m -Xmx1g \
 		-Duser.home=/var/lib/youtrack \
