@@ -37,7 +37,7 @@ ADD ./etc /etc
 ADD youtrack.sh /usr/local/youtrack.sh
 
 RUN \
-    export YOUTRACK_VERSION=6.5.16713 && \
+    export YOUTRACK_VERSION=6.5.16807 && \
     mkdir -p /usr/local/youtrack && \
     mkdir -p /var/lib/youtrack && \
     wget -nv https://download.jetbrains.com/charisma/youtrack-$YOUTRACK_VERSION.jar -O /usr/local/youtrack/youtrack-$YOUTRACK_VERSION.jar && \
