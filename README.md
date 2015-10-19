@@ -18,7 +18,7 @@ Docker has to run. It supports many platforms like Ubuntu, Arch Linux, Mac OS X,
 1. Install docker. [It's not very hard.](http://docs.docker.io/en/latest/installation/)
 2. Run it! (Stop with CTRL-C, repeat at pleasure)
 
-  `docker run -t -i -p 127.0.0.1:8080:8080 dzwicker/docker-youtrack`
+  `docker run -t -i -p 8080:8080 dzwicker/docker-youtrack`
 
 
 
@@ -27,7 +27,11 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 ## Do it as service in ubuntu/debian
 1. Create directory to store data
   
-  `mkdir -p /var/lib/youtrack`
+  ``` bash
+  mkdir -p /var/lib/youtrack
+  mkdir -p /var/log/youtrack
+  mkdir -p /etc/youtrack
+  ```
 
 2. Permissions!
 
@@ -35,9 +39,15 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
   
 3. Create container!
 
-   Replace the value for the environment variable `YOUTRACK_BASE_URL`!
-
-  `docker create -t -i -p 127.0.0.1:8080:8080 -v /var/lib/youtrack:/var/lib/youtrack -e YOUTRACK_BASE_URL='http(s):\\your.domain.com' --name docker-youtrack dzwicker/docker-youtrack`
+  ```
+    docker create -t -i -p 127.0.0.1:8080:8080 \ 
+    	-v /var/lib/youtrack:/var/lib/youtrack \ 
+    	-v /var/log/youtrack:/var/log/youtrack \
+    	-v /etc/youtrack:/usr/local/youtrack/conf \
+    	-v /tmp:/tmp \
+    	--name docker-youtrack \
+    	dzwicker/docker-youtrack
+    ```
 
 4. Create upstart configuration `/etc/init/docker-youtrack.conf`
 
@@ -47,7 +57,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 	stop on runlevel [!2345]
 	respawn
 	script
-	  /usr/bin/docker start -a docker-youtrack >>/var/log/docker-youtrack.log 2>&1
+	  /usr/bin/docker start -a docker-youtrack >>/var/log/youtrack/docker-youtrack.log 2>&1
 	end script
 
 	```
@@ -55,14 +65,20 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 
 	```
-	/var/log/docker-youtrack.log {
-	    rotate 7
-	    daily
-	    missingok
-	    notifempty
-	    sharedscripts
-	    copytruncate
-	    compress
+	/var/log/youtrack/*.log
+	/var/log/hub/hub/*.log 
+    /var/log/hub/hub/logs/*.log
+	/var/log/hub/youtrack/*.log 
+	/var/log/hub/youtrack/logs/*.log 
+	/var/log/youtrack/logs/internal/services/bundleProcess/*.log 
+	 {
+		rotate 7
+		daily
+		missingok
+		notifempty
+		sharedscripts
+		copytruncate
+		compress
 	}
 	```
 6. (optional) Add vhost to nginx
@@ -95,3 +111,6 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 	}
 	```
+7. Configuring New YouTrack Server
+	
+	Follow the steps of the installation [instructions for Jetbrains Youtrack](https://confluence.jetbrains.com/display/YTD65/Installing+YouTrack+with+ZIP+Distribution) using paths located under `/var/lib/hub/data`, `/var/lib/hub/backups`, `/var/log/hub`, `/tmp`.
