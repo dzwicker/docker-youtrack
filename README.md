@@ -66,11 +66,11 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 
 	```
 	/var/log/youtrack/*.log
-	/var/log/hub/hub/*.log 
-    /var/log/hub/hub/logs/*.log
-	/var/log/hub/youtrack/*.log 
-	/var/log/hub/youtrack/logs/*.log 
-	/var/log/youtrack/logs/internal/services/bundleProcess/*.log 
+	/var/log/youtrack/hub/*.log 
+    /var/log/youtrack/hub/logs/*.log
+	/var/log/youtrack/youtrack/*.log 
+	/var/log/youtrack/youtrack/logs/*.log 
+	/var/log/youtrack/internal/services/bundleProcess/*.log 
 	 {
 		rotate 7
 		daily
