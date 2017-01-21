@@ -13,7 +13,7 @@ COPY entry-point.sh /entry-point.sh
 
 RUN \
     export YOUTRACK_VERSION=7.0 && \
-    export YOUTRACK_BUILD=28958 && \
+    export YOUTRACK_BUILD=29566 && \
     mkdir -p /usr/local && \
     mkdir -p /var/lib/youtrack && \
     cd /usr/local && \
