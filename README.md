@@ -39,15 +39,15 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
   
 3. Create container!
 
-  ```
-    docker create -t -i -p 127.0.0.1:8080:8080 \ 
+   ```
+   docker create -t -i -p 127.0.0.1:8080:8080 \
     	-v /var/lib/youtrack:/var/lib/youtrack \ 
     	-v /var/log/youtrack:/var/log/youtrack \
     	-v /etc/youtrack:/usr/local/youtrack/conf \
     	-v /tmp:/tmp \
     	--name docker-youtrack \
-    	dzwicker/docker-youtrack
-  ```
+   dzwicker/docker-youtrack
+   ```
 
 4. Create upstart configuration `/etc/init/docker-youtrack.conf`
 
@@ -63,24 +63,24 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 	```
 5. (optional) Setup logrotate e.g. `/etc/logrotate.d/docker-youtrack`
 
-```
-	/var/log/youtrack/*.log
-	/var/log/youtrack/hub/*.log 
-    /var/log/youtrack/hub/logs/*.log
-	/var/log/youtrack/youtrack/*.log 
-	/var/log/youtrack/youtrack/logs/*.log 
-	/var/log/youtrack/internal/services/bundleProcess/*.log 
-	 {
-		rotate 7
-		daily
-		missingok
-		notifempty
-		sharedscripts
-		copytruncate
-		compress
-	}
+    ```
+     /var/log/youtrack/*.log
+     /var/log/youtrack/hub/*.log
+     /var/log/youtrack/hub/logs/*.log
+     /var/log/youtrack/youtrack/*.log
+     /var/log/youtrack/youtrack/logs/*.log
+     /var/log/youtrack/internal/services/bundleProcess/*.log
+      {
+         rotate 7
+         daily
+         missingok
+         notifempty
+         sharedscripts
+         copytruncate
+         compress
+     }
 
-```
+    ```
 6. (optional) Add vhost to nginx
 
 	`mkdir -p /var/log/nginx/your-domain`
