@@ -47,7 +47,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
     	-v /tmp:/tmp \
     	--name docker-youtrack \
     	dzwicker/docker-youtrack
-    ```
+  ```
 
 4. Create upstart configuration `/etc/init/docker-youtrack.conf`
 
@@ -63,8 +63,7 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 	```
 5. (optional) Setup logrotate e.g. `/etc/logrotate.d/docker-youtrack`
 
-
-	```
+```
 	/var/log/youtrack/*.log
 	/var/log/youtrack/hub/*.log 
     /var/log/youtrack/hub/logs/*.log
@@ -80,7 +79,8 @@ Now open your browser and point it to `http://localhost:8080` and rejoice. :)
 		copytruncate
 		compress
 	}
-	```
+
+```
 6. (optional) Add vhost to nginx
 
 	`mkdir -p /var/log/nginx/your-domain`
